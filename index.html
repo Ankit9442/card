@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💘</title>
+
+<style>
+/* ---------------- BACKGROUND ---------------- */
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Comic Sans MS', cursive, sans-serif;
+    background:linear-gradient(135deg,#ffd1dc,#ff9aa2,#ffc3a0);
+    overflow:hidden;
+}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:20px;
+    animation:float 6s linear infinite;
+}
+@keyframes float{
+    0%{transform:translateY(100vh) scale(1); opacity:1;}
+    100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
+}
+
+/* ---------------- CARD ---------------- */
+.card{
+    background:white;
+    padding:40px 30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    max-width:320px;
+    position:relative;
+    z-index:2;
+    animation:pop 0.6s ease;
+}
+@keyframes pop{
+    from{transform:scale(0.7); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+h1{
+    color:#ff4d6d;
+    margin-bottom:10px;
+}
+
+p{
+    color:#666;
+    margin-bottom:25px;
+}
+
+/* ---------------- BUTTONS ---------------- */
+button{
+    border:none;
+    padding:12px 22px;
+    margin:10px;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+    box-shadow:0 4px 15px rgba(255,77,109,0.4);
+}
+#yes:hover{
+    transform:scale(1.1);
+}
+
+#no{
+    background:#eee;
+    position:absolute;
+}
+
+/* success message */
+#message{
+    display:none;
+    font-size:22px;
+    color:#ff4d6d;
+    margin-top:20px;
+    animation:fade 1s ease forwards;
+}
+@keyframes fade{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* music toggle */
+#musicBtn{
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    background:white;
+    border-radius:50%;
+    width:50px;
+    height:50px;
+    font-size:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<!-- floating hearts -->
+<script>
+for(let i=0;i<30;i++){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*3+3)+"s";
+    heart.style.fontSize=(Math.random()*20+10)+"px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<!-- CARD -->
+<div class="card">
+    <h1>Will You Be My Valentine? ❤️</h1>
+    <p>I have something very important to ask you…</p>
+
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 💔</button>
+
+    <div id="message">
+        Yayyyy!!! 💕 I knew you'd say yes! Happy Valentine’s Day! 💘
+        <br><br>
+        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="150">
+    </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-background-112190.mp3">
+</audio>
+<button id="musicBtn">🎵</button>
+
+<script>
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const msg=document.getElementById("message");
+const music=document.getElementById("music");
+const musicBtn=document.getElementById("musicBtn");
+
+/* NO button escapes */
+function moveButton(){
+    const x=Math.random()*300-150;
+    const y=Math.random()*200-100;
+    noBtn.style.transform=`translate(${x}px,${y}px)`;
+}
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("click",moveButton);
+
+/* YES click */
+yesBtn.onclick=()=>{
+    msg.style.display="block";
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+    confetti();
+};
+
+/* music toggle */
+musicBtn.onclick=()=>{
+    if(music.paused){
+        music.play();
+        musicBtn.textContent="🔊";
+    }else{
+        music.pause();
+        musicBtn.textContent="🎵";
+    }
+};
+
+/* heart confetti */
+function confetti(){
+    for(let i=0;i<40;i++){
+        let c=document.createElement("div");
+        c.className="heart";
+        c.innerHTML="💖";
+        c.style.left=Math.random()*100+"vw";
+        c.style.animationDuration=(Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+    }
+}
+</script>
+
+</body>
+</html>
